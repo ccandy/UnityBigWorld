@@ -17,23 +17,23 @@ public class BigWorldTools
             return;
         }
 
-        Transform[] trans = landObj.GetComponentsInChildren<Transform>();
-        for(int n = 1; n < trans.Length; n++)
+        GameObject[] gos = GameObject.FindGameObjectsWithTag("Land");
+        for (int n = 1; n < gos.Length; n++)
         {
-            Transform t = trans[n];
-            t.name = "Land" + (n - 1);
+            GameObject go = gos[n];
+            go.name = "Land" + (n - 1);
         }
 
         BWLand bwland = landObj.GetComponent<BWLand>();
         int landWidth = bwland.Width;
         int landHeight = bwland.Height;
-        int i = 1;
+        int i = 0;
         for(int x = 0; x < landHeight; x++)
         {
             for (int y = 0; y < landWidth; y++)
             {
-                Transform t = trans[i];
-                t.name = "Land" + x + "," + y;
+                GameObject go = gos[i];
+                go.name = "Land" + x + "," + y;
                 i++;
             }
         }
@@ -46,15 +46,15 @@ public class BigWorldTools
         BWLand bwland = landObj.GetComponent<BWLand>();
         int landWidth = bwland.Width;
         int landHeight = bwland.Height;
-        int i = 1;
-        Transform[] trans = landObj.GetComponentsInChildren<Transform>();
+        int i = 0;
+        GameObject[] gos = GameObject.FindGameObjectsWithTag("Land");
 
         for (int x = 0; x < landHeight; x++)
         {
             for (int y = 0; y < landWidth; y++)
             {
-                Transform t = trans[i];
-                t.name = "Land" + x + "," + y;
+                GameObject go = gos[i];
+                go.name = "Land" + x + "," + y;
 
                 LandOS _landOS = ScriptableObject.CreateInstance<LandOS>();
                 _landOS.X = x;
@@ -62,10 +62,9 @@ public class BigWorldTools
                 _landOS.CellSize = bwland.CellSize;
                 _landOS.name = "landsX" + x + "," + y + ".asset";
                 AssetDatabase.CreateAsset(_landOS, "Assets/Lands/" + _landOS.name);
-                AssetDatabase.SaveAssets();
-
                 i++;
             }
+            AssetDatabase.SaveAssets();
             EditorUtility.FocusProjectWindow();
         }
 
