@@ -4,10 +4,12 @@ using UnityEngine;
 
 public class WorldLoader : MonoBehaviour
 {
-
-
     public Transform PlayerTransformer;
+    public BWLand Land;
     public float CheckTimer = 1;
+
+    private float _currentMove;
+
     void Start()
     {
         StartCoroutine(PlayerPositionChecker());
@@ -19,7 +21,7 @@ public class WorldLoader : MonoBehaviour
         {
             if(PlayerTransformer != null)
             {
-                Debug.Log("Player pos " + PlayerTransformer.position);
+                CheckPositionTiles();
             }
             else
             {
@@ -27,8 +29,18 @@ public class WorldLoader : MonoBehaviour
             }
             yield return new WaitForSeconds(CheckTimer);
         }
-        
-
     } 
     
+
+    private void CheckPositionTiles()
+    {
+        Vector3 pos = PlayerTransformer.position;
+        if (Land.CheckPos(pos))
+        {
+
+        }
+    }
+
+    
+
 }
