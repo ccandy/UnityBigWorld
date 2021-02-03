@@ -7,6 +7,12 @@ using UnityEditor;
 
 public class BigWorldTools
 {
+
+    private static string[] _assetTags =
+    {
+        "Tree"
+    };
+
     [MenuItem("Tools/Big World/Rename Assets")]
     private static void RenameAssets()
     {
@@ -61,15 +67,27 @@ public class BigWorldTools
                 _landOS.Y = y;
                 _landOS.CellSize = bwland.CellSize;
                 _landOS.name = "landsX" + x + "," + y + ".asset";
+
+                LoadWorldAsset(ref _landOS, go);
+
                 AssetDatabase.CreateAsset(_landOS, "Assets/Lands/" + _landOS.name);
                 i++;
             }
             AssetDatabase.SaveAssets();
             EditorUtility.FocusProjectWindow();
         }
+    }
 
-        //LandOS _landOS = ScriptableObject.CreateInstance<LandOS>();
-
-
+    private static void LoadWorldAsset(ref LandOS los, GameObject go)
+    {
+        Transform[] trans = go.GetComponentsInChildren<Transform>();
+        for(int n = 0; n < trans.Length; n++)
+        {
+            Transform t = trans[n];
+            if (t.gameObject.tag.Equals("Tree"))
+            {
+                los.TreeList.Add(t.gameObject);                
+            }
+        }
     }
 }

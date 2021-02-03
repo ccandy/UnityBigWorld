@@ -8,4 +8,5 @@ public class LandOS : ScriptableObject
     public int Y;
     public int CellSize;
 
+    public List<GameObject> TreeList = new List<GameObject>();
 }
